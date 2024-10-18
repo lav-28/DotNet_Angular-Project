@@ -1,0 +1,334 @@
+[
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDto",
+        "Type": "GraduateTraineeEnrollmentApi.Dtos.LoginDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "api/Auth/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerDto",
+        "Type": "GraduateTraineeEnrollmentApi.Dtos.RegisterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.DegreeController",
+    "Method": "AddDegree",
+    "RelativePath": "api/Degree/Create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "degreeDto",
+        "Type": "GraduateTraineeEnrollmentApi.Dtos.AddDegreeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.DegreeController",
+    "Method": "GetAllDegrees",
+    "RelativePath": "api/Degree/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.DegreeController",
+    "Method": "GetDegreeById",
+    "RelativePath": "api/Degree/GetDegreeById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.DegreeController",
+    "Method": "UpdateDegree",
+    "RelativePath": "api/Degree/ModifyDegree",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "degreeDto",
+        "Type": "GraduateTraineeEnrollmentApi.Dtos.UpdateDegreeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.DegreeController",
+    "Method": "RemoveCategory",
+    "RelativePath": "api/Degree/Remove/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.GraduateTraineeController",
+    "Method": "AddGraduateTrainee",
+    "RelativePath": "api/GraduateTrainee/AddTrainee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "traineeDto",
+        "Type": "GraduateTraineeEnrollmentApi.Dtos.AddGraduateTraineeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.GraduateTraineeController",
+    "Method": "GetAll",
+    "RelativePath": "api/GraduateTrainee/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.GraduateTraineeController",
+    "Method": "GetGraduateTraineeById",
+    "RelativePath": "api/GraduateTrainee/GetById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.GraduateTraineeController",
+    "Method": "TraineeReport",
+    "RelativePath": "api/GraduateTrainee/GetTraineeEnrollmentReport",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.GraduateTraineeController",
+    "Method": "RemoveGraduateTrainee",
+    "RelativePath": "api/GraduateTrainee/Remove/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.GraduateTraineeController",
+    "Method": "UpdateGraduatrainee",
+    "RelativePath": "api/GraduateTrainee/UpdateTrainee",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trineeDto",
+        "Type": "GraduateTraineeEnrollmentApi.Dtos.UpdateGraduateTraineeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.SteamController",
+    "Method": "AddStream",
+    "RelativePath": "api/Steam/Create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "streamDto",
+        "Type": "GraduateTraineeEnrollmentApi.Dtos.AddStreamDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.SteamController",
+    "Method": "GetAllStreams",
+    "RelativePath": "api/Steam/GetAllStream",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.SteamController",
+    "Method": "GetAllStreamByPagination",
+    "RelativePath": "api/Steam/GetAllStreamByPagination",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.SteamController",
+    "Method": "GetStreamByDegreeId",
+    "RelativePath": "api/Steam/GetStreamByDegreeId/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.SteamController",
+    "Method": "GetStreamById",
+    "RelativePath": "api/Steam/GetStreamById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.SteamController",
+    "Method": "UpdateStream",
+    "RelativePath": "api/Steam/ModifyStream",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "streamDto",
+        "Type": "GraduateTraineeEnrollmentApi.Dtos.UpdateStreamDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.SteamController",
+    "Method": "RemoveStream",
+    "RelativePath": "api/Steam/Remove/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.SteamController",
+    "Method": "GetTotalCountOfPositions",
+    "RelativePath": "api/Steam/StreamsCount",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GraduateTraineeEnrollmentApi.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[GraduateTraineeEnrollmentApi.WeatherForecast, GraduateTraineeEnrollmentApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]
