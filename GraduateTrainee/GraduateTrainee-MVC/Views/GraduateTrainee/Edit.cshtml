@@ -1,0 +1,167 @@
+﻿@using GraduateTraineeEnrollmentMVC.ViewModels
+@model AddGraduateTraineeViewModel
+
+
+<h1>Modify Graduate Trainee</h1>
+<form id="gradeForm" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="GraduateTraineeId" />
+
+    <div class="form-group">
+        <label asp-for="DegreeId" class="control-label">Degree</label>
+        <select asp-for="DegreeId" onchange="LoadStreams();" class="form-control" asp-items="@(new SelectList(ViewBag.Degrees, "DegreeId", "DegreeName"))">
+            <option value="">-- Select Degree --</option>
+        </select>
+        <span asp-validation-for="DegreeId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StreamId" class="control-label">Stream:</label>
+        <select asp-for="StreamId" class="form-control">
+            <option value="">-- Select Stream --</option>
+        </select>
+        <span asp-validation-for="StreamId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TraineeName" class="control-label"></label>
+        <input asp-for="TraineeName" class="form-control" />
+        <span asp-validation-for="TraineeName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TraineeEmail" class="control-label"></label>
+        <input asp-for="TraineeEmail" class="form-control" />
+        <span asp-validation-for="TraineeEmail" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UniversityName" class="control-label"></label>
+        <input asp-for="UniversityName" class="form-control" />
+        <span asp-validation-for="UniversityName" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="IsLastSemesterPending" class="control-label"></label>
+        <input asp-for="IsLastSemesterPending" type="checkbox" />
+        <span asp-validation-for="IsLastSemesterPending" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="Gender" class="control-label">Gender:</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" asp-for="Gender" value="M" id="GenderTrue" />
+            <label class="form-check-label" for="Gender">Male</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" asp-for="Gender" value="F" id="GenderFalse" />
+            <label class="form-check-label" for="Gender">Female</label>
+        </div>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateOfApplication" class="control-label"></label>
+        <input type="date" asp-for="DateOfApplication" class="form-control" />
+        <span asp-validation-for="DateOfApplication" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="File" class="Control-label">Image</label>
+        <input type="file" asp-for="File" class="form-control" />
+        <span asp-validation-for="File" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Ai" class="control-label">Ai Marks</label>
+        <input type="number" min="0" max="100" asp-for="Ai" class="form-control" />
+        <span asp-validation-for="Ai" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Phyton" class="control-label">Phyton Marks</label>
+        <input type ="number" min="0" max="100" asp-for="Phyton" class="form-control" />
+        <span asp-validation-for="Phyton" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BusinessAnalysis" class="control-label">BusinessAnalysis Marks</label>
+        <input type="number" min="0" max="100" asp-for="BusinessAnalysis" class="form-control" />
+        <span asp-validation-for="BusinessAnalysis" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MachineLearning" class="control-label">MachineLearning Marks</label>
+        <input type="number" min="0" max="100" asp-for="MachineLearning" class="form-control" />
+        <span asp-validation-for="MachineLearning" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Practical" class="control-label">Practical Marks</label>
+        <input type="number" min="0" max="100" asp-for="Practical" class="form-control" />
+        <span asp-validation-for="Practical" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="hidden" asp-for="Image" />
+        <input type="submit" value="Update"  />
+        <a asp-action="Index" >Cancel</a>
+    </div>
+
+</form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let initialStreamId = @ViewBag.StreamId;
+    $(document).ready(function () {
+        LoadStreams();
+    })
+    function LoadStreams() {
+        var countryId = $('#DegreeId').val();
+
+        // Setting placeholder option
+        if (countryId == '') {
+            $('#StreamId').empty();
+            $('#StreamId').append(`
+                                                    <option value="">-- Select Stream --</option>
+                                                `)
+            return;
+        }
+        $.ajax({
+            url: "http://localhost:5134/api/Steam/GetStreamByDegreeId/" + countryId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    $('#StreamId').empty();
+                    response.data.forEach(function (position) {
+                        $('#StreamId').append(`
+                                                <option value="${position.streamId}">${position.streamName}</option>
+                                            `)
+                    })
+                    if (initialStreamId != -1) {
+                        $('#StreamId').val(initialStreamId);
+                        initialStreamId = -1;
+                    }
+                }
+            },
+            error: function (xhr, status, error) {
+                // Check if there is a responseText available
+                if (xhr.responseText) {
+                    try {
+                        // Parse the responseText into a JavaScript object
+                        var errorResponse = JSON.parse(xhr.responseText);
+
+                        // Check the properties of the errorResponse object
+                        if (errorResponse && errorResponse.message) {
+                            // Display the error message to the user
+                            alert('Error: ' + errorResponse.message);
+                        } else {
+                            // Display a generic error message
+                            alert('An error occurred. Please try again. ');
+                        }
+
+                    } catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                        alert('An error occurred. Please try again. ');
+                    }
+                } else {
+                    // Display a generic error message if no responseText is available
+                    alert('An unexpected error occurred. Please try again. ');
+                }
+            },
+            complete: function () {
+            }
+        })
+    }
+
+</script>

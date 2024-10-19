@@ -1,0 +1,145 @@
+﻿<h1>Graduate Trainee</h1>
+
+<table class="table" id="GraduateTraineeData">
+
+    <thead>
+
+        <tr>
+            <th>Trainee name</th>
+            <th>Degree name</th>
+            <th>Stream name</th>
+
+            <th>Trainee Email</th>
+
+            <th>University Name</th>
+
+            <th>IsLastSemestPending</th>
+            <th>Gender</th>
+            <th>DateOfApplication</th>
+            <th>Action</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+    </tbody>
+
+</table>
+<a asp-action="Create" >Add</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        LoadTrainee();
+    });
+
+    function LoadTrainee() {
+
+        $('#loader').show();
+        // Get jwtToken cookie value
+        // Retrieve 'jwtToken' cookie value
+        const jwtToken = getCookie('jwtToken');
+        if (!jwtToken) {
+            // Redirect to login page if jwtToken cookie is not available
+            window.location.href = '/Auth/LoginUser';
+            return; // Stop further execution
+        }
+        $.ajax({
+            url: "http://localhost:5134/api/GraduateTrainee/GetAll",
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
+            success: function (response) {
+                if (response.success) {
+                    response.data.forEach(function (degree) {
+                        
+                        if (degree.isLastSemesterPending === false) {
+                            degree.isLastSemesterPending = "No";
+                        }
+                        else {
+                            degree.isLastSemesterPending = "Yes";
+                        }
+
+                        if (degree.gender === 'M' || degree.gender === 'm') {
+                            degree.gender = "Male"
+                            }
+                            else{
+                            degree.gender = "Female"
+
+                            }
+
+                        var dateObj = new Date(degree.dateOfApplication);
+                        var year = dateObj.getFullYear();
+                        var month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                        var day = String(dateObj.getDate()).padStart(2, '0');
+
+                        var formattedDate = day + "-" + month + "-" + year;
+
+                        $('#GraduateTraineeData tbody').append(`
+                                                        <tr>
+                                                            <td>${degree.traineeName}</td>
+                                                            <td>${degree.degree.degreeName}</td>
+                                                            <td>${degree.stream.streamName}</td>
+
+                                                                <td>${degree.traineeEmail}</td>
+                                                                <td>${degree.universityName}</td>
+                                                                
+                                                                    <td>${degree.isLastSemesterPending}</td>
+                                                                            <td>${degree.gender}</td>
+                                                                                <td>${formattedDate}</td>
+                                                                <td>
+                                                                <a href="/GraduateTraineeAjax/Edit/${degree.graduateTraineeId}">Edit<a/> |
+                                                                            <a href="/GraduateTraineeAjax/Delete/${degree.graduateTraineeId}">Delete<a/> |
+                                                                                 <a href="/GraduateTraineeAjax/Details/${degree.graduateTraineeId}">Details<a/>
+                                                            </td>
+
+                                                        </tr>
+                                            `)
+                    })
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseText) {
+
+                    try {
+                        // Parse the responseText into a JavaScript object
+                        var errorResponse = JSON.parse(xhr.responseText);
+
+                        // Check the properties of the errorResponse object
+                        if (errorResponse && errorResponse.message) {
+                            // Display the error message to the user
+                            alert('Error: ' + errorResponse.message);
+                        } else {
+                            // Display a generic error message
+                            alert('An error occurred. Please try again. ');
+
+                        }
+                    }
+
+
+                    catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                        alert('An error occurred. Please try again. ');
+                    }
+
+                } else {
+                    // Display a generic error message if no responseText is available
+                    alert('An unexpected error occurred. Please try again. ');
+                }
+            },
+            complete: function () {
+                $('#loader').hide();
+            }
+        });
+    }
+    function getCookie(name) {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith(name + '='))
+            ?.split('=')[1];
+        return cookieValue ? decodeURIComponent(cookieValue) : null;
+    }
+</script>

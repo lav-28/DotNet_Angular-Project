@@ -1,0 +1,95 @@
+﻿<div id="loader" style="display:none;">
+    <img src="~/images/loading.gif" />
+</div>
+<h1>Streams</h1>
+<table id="degreeGrid" class="table">
+    <thead>
+        <tr>
+            <th>Degree name</th>
+            <th>Degree description</th>
+            <th>Stream name</th>
+            <th>Stream description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* Grid will populated dynamically. *@
+
+    </tbody>
+</table>
+<a asp-action="Create">Add</a>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@* <script src="~/js/degreeindex.js"></script> *@
+
+<script>
+    $(document).ready(function () {
+        LoadDegrees();
+    });
+    function LoadDegrees() {
+        // Get jwtToken cookie value
+        // Retrieve 'jwtToken' cookie value
+        const jwtToken = getCookie('jwtToken');
+        if (!jwtToken) {
+            // Redirect to login page if jwtToken cookie is not available
+            window.location.href = '/Auth/LoginUser';
+            return; // Stop further execution
+        }
+        $.ajax({
+            url: "http://localhost:5134/api/Steam/GetAllStream",
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
+            success: function (response) {
+                if (response.success) {
+                    response.data.forEach(function (stream) {
+                        $('#degreeGrid tbody').append(`
+                                                <tr>
+                                                    <td>${stream.degree.degreeName}</td>
+                                                    <td>${stream.degree.degreeDescription}</td>
+                                                    <td>${stream.streamName}</td>
+                                                    <td>${stream.streamDescription}</td>
+                                                    <td>
+                                                        <a href="/StreamAjax/Edit/${stream.streamId}">Edit</a>|
+                                                        <a href="/StreamAjax/Details/${stream.streamId}">Details</a>|
+                                                        <a href="/StreamAjax/Delete/${stream.streamId}">Delete</a>
+                                                   </td>
+                                                </tr>
+                                            `)
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                // alert('Something went wrong .Please try after some time.');
+                if (xhr.responseText) {
+                    try {
+                        var errorResponse = JSON.parse(xhr.responseText);
+                        if (errorResponse && errorResponse.message) {
+                            alert('Error: ' + errorResponse.message);
+                        }
+                        else {
+                            alert('An error occurred. Please try again.');
+                        }
+                    }
+                    catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                        alert('An error occurred. Please try again.');
+                    }
+                }
+                else {
+                    alert('An unexpected error occurred. Please try again.');
+                }
+            },
+        });
+    }
+    function getCookie(name) {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith(name + '='))
+            ?.split('=')[1];
+        return cookieValue ? decodeURIComponent(cookieValue) : null;
+    }
+</script>
+
+

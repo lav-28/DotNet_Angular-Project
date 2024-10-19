@@ -1,0 +1,67 @@
+﻿@using GraduateTraineeEnrollmentMVC.ViewModels
+@model List<GraduateTraineeViewModel>
+
+
+<h1>Graduate Trainee</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>Trainee Name </th>
+            <th>Degree Name</th>
+            <th>Stream Name</th>
+            <th>Trainee Email </th>
+            <th>University Name </th>
+            <th>Last Semester Pending </th>
+            <th>Gender </th>
+            <th>Date of Application </th>
+            <th>Actions</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var gt in Model)
+        {
+            <tr>
+
+                <td>@gt.TraineeName</td>
+                <td>@gt.Degree.DegreeName</td>
+                <td>@gt.Stream.StreamName</td>
+                @* <td>@gt.Degree.DegreeName</td>
+            <td>@gt.Stream.StreamName</td> *@
+                <td>@gt.TraineeEmail</td>
+                <td>@gt.UniversityName</td>
+                @if (gt.IsLastSemesterPending)
+                {
+                    <td>Yes </td>
+                }
+                else
+                {
+                    <td>No</td>
+                }
+                @if (gt.Gender == "M")
+                    {
+                        <td> Male </td>
+                    }
+                    else
+                    {
+                    <td>Female</td>
+                    }
+                
+                <td>@gt.DateOfApplication.ToShortDateString()</td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@gt.GraduateTraineeId" >Edit</a>
+                    <a asp-action="Details" asp-route-id="@gt.GraduateTraineeId" >Details</a>
+                    <a asp-action="Delete" asp-route-id="@gt.GraduateTraineeId" >Delete</a>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create">Add</a>

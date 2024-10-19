@@ -1,0 +1,116 @@
+﻿@using GraduateTraineeEnrollmentMVC.ViewModels
+@model AddGraduateTraineeViewModel
+
+<h1>Graduate Trainees Detail</h1>
+
+<div>
+    <td>
+        @if (Model.Image == null || Model.Image == "")
+        {
+            <img src="@Url.Content("~/Uploads/" + "defaultContact.jpg")" alt="Category img" width="100" height="100" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/Uploads/" +Model.Image)" alt="Category img" width="100" height="100" />
+        }
+    </td>
+    <h4>Trainee Name : @Model.TraineeName</h4>
+    <h4>Degree Name : @Model.Degree.DegreeName</h4>
+    <h4>Stream Name : @Model.Stream.StreamName</h4>
+    <h4>Trainee Email : @Model.TraineeEmail</h4>
+    <h4>University : @Model.UniversityName</h4>
+    <h4>
+        Last Semester Status :
+        @if (Model.IsLastSemesterPending)
+        {
+            <td>Pending</td>
+        }
+        else
+        {
+            <td>Not Pending</td>
+        }
+
+    </h4>
+
+    <h4>Gender : 
+        @if (Model.Gender == "M")
+        {
+            <td>Male</td>
+        }
+        else
+        {
+            <td>Female</td>
+        }
+    </h4>
+    <h4>Date of Application : @Model.DateOfApplication.ToShortDateString()</h4>
+
+    @if(Model.Ai == null)
+    {
+        <h4>AI marks : NA</h4>
+    }
+    else
+    {
+        <h4>AI marks : @Model.Ai</h4>
+    }
+
+    @if (Model.Phyton == null)
+    {
+        <h4>Python marks : NA</h4>
+    }
+    else
+    {
+        <h4>Python marks : @Model.Phyton</h4>
+    }
+
+    @if (Model.BusinessAnalysis == null)
+    {
+        <h4>Business Analysis marks : NA</h4>
+    }
+    else
+    {
+        <h4>Business Analysis marks : @Model.BusinessAnalysis</h4>
+    }
+
+    @if (Model.MachineLearning == null)
+    {
+        <h4>Machine Learning marks : NA</h4>
+    }
+    else
+    {
+        <h4>Machine Learning marks : @Model.MachineLearning</h4>
+    }
+
+    @if (Model.Practical == null)
+    {
+        <h4>Practical marks : NA</h4>
+    }
+    else
+    {
+        <h4>Practical marks : @Model.Practical</h4>
+    }
+    
+    @if (Model.Percentages == null)
+    {
+        <h4>Percentage : NA</h4>
+    }
+    else
+    {
+        <h4>Percentage : @Model.Practical</h4>
+    }
+
+    @if (Model.IsAdmisisonConfirmed == true)
+    {
+        <h4>Admission Confirmed : Yes</h4>
+    }
+    else
+    {
+        <h4>Admission Confirmed : No</h4>
+    }
+
+</div>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.GraduateTraineeId" >Edit</a>
+    
+    <a asp-action="Index" asp-route-id="@Model.GraduateTraineeId">Back to List</a>
+</p>

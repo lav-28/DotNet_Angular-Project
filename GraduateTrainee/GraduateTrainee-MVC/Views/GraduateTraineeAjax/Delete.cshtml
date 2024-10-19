@@ -1,0 +1,213 @@
+﻿<h1>Delete Trainee</h1>
+<div>
+    <h4>Are you sure?</h4>
+
+    <hr />
+    <h3> Name : <label id="Tname"></label></h3>
+    <h4> Email :<label id="Temail"></label></h4>
+    <h5>University : <label id="TUniversity"></label></h5>
+    <h5>Gender :<label id="TGender"></label></h5>
+    <h5>Date of Application :<label id="TDate"></label></h5>
+    <h5>Last semester done : <label id="TLastSem"></label></h5>
+    
+    <h5>Is Admission Confirmed :<label id="TAdmission"></label></h5>
+
+    <form id="DeleteConfirmed" method="post">
+        <input type="hidden" id="GraduateTraineeId" />
+        <div class="form-group">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetTraineeDetail();
+
+        $('#DeleteConfirmed').submit(function (e) {
+            e.preventDefault();
+
+            var currentUrl = window.location.href;
+            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+            $('#loader').show();
+            // Get jwtToken cookie value
+            // Retrieve 'jwtToken' cookie value
+            const jwtToken = getCookie('jwtToken');
+            if (!jwtToken) {
+                // Redirect to login page if jwtToken cookie is not available
+                window.location.href = '/auth/login';
+                return; // Stop further execution
+            }
+            $.ajax({
+                url: "http://localhost:5134/api/GraduateTrainee/Remove/" + id,
+                type: 'DELETE',
+                contentType: 'application/json',
+                headers: {
+                    'Authorization': 'Bearer ' + jwtToken
+                },
+                success: function (response) {
+
+                    ShowMessage(response.message);
+                },
+                error: function (xhr, status, error) {
+                    // Check if there is a responseText available
+                    if (xhr.responseText) {
+                        try {
+                            // Parse the responseText into a JavaScript object
+                            var errorResponse = JSON.parse(xhr.responseText);
+
+                            // Check the properties of the errorResponse object
+                            if (errorResponse && errorResponse.message) {
+                                // Display the error message to the user
+                                alert('Error: ' + errorResponse.message);
+                            } else {
+                                // Display a generic error message
+                                alert('An error occurred. Please try again.');
+                            }
+                        } catch (parseError) {
+                            console.error('Error parsing response:', parseError);
+                            alert('An error occurred. Please try again.');
+                        }
+                    } else {
+                        // Display a generic error message if no responseText is available
+                        alert('An unexpected error occurred. Please try again.');
+                    }
+                },
+                complete: function () {
+                    $('#loader').hide();
+                }
+            })
+
+        })
+    })
+
+
+
+    function GetTraineeDetail() {
+        var currentUrl = window.location.href;
+        var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+        $('#loader').show();
+        // Get jwtToken cookie value
+        // Retrieve 'jwtToken' cookie value
+        const jwtToken = getCookie('jwtToken');
+        if (!jwtToken) {
+            // Redirect to login page if jwtToken cookie is not available
+            window.location.href = '/auth/login';
+            return; // Stop further execution
+        }   
+        $.ajax({
+            url: "http://localhost:5134/api/GraduateTrainee/GetById/" + id,
+            type: "GET",
+            datatype: "json",
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
+            success: function (response) {
+                $("#Tname").html(response.data.traineeName);
+                $("#Temail").html(response.data.traineeEmail);
+                $("#TUniversity").html(response.data.universityName);
+                if (response.data.gender == 'M') {
+                    $("#TGender").html("Male");
+
+                }
+                else {
+                    $("#TGender").html("Female");
+                }
+                $("#TDate").html(response.data.dateOfApplication);
+
+                if (response.data.isLastSemesterPending == "true") {
+                    $("#TLastSem").html("Yes");
+                }
+                else {
+                    $("#TLastSem").html("No");
+
+                }
+
+                if (response.data.isAdmisisonConfirmed == "false") {
+                    $("#TAdmission").html("No");
+                }
+                else {
+                    $("#TAdmission").html("Yes");
+
+                }
+
+                if (response.data.isLastSemesterPending == 'true') {
+                    $("#Ai").html(response.data.ai).html("NA");
+                    $("#ML").html(response.data.machineLearning).html("NA");;
+                    $("#BA").html(response.data.businessAnalysis).html("NA");;
+                    $("#PR").html(response.data.practical).html("NA");;
+                    $("#Py").html(response.data.phyton).html("NA");;
+                }
+                else {
+
+                    if (response.data.percentages >= 60) {
+                        $("#TAdmission").html("Yes");
+                    }
+                    else {
+                        $("#TAdmission").html("No");
+                    }
+                }
+            },
+            error: function (xhr, status, error) {
+                // Check if there is a responseText available
+                if (xhr.responseText) {
+                    try {
+                        // Parse the responseText into a JavaScript object
+                        var errorResponse = JSON.parse(xhr.responseText);
+
+                        // Check the properties of the errorResponse object
+                        if (errorResponse && errorResponse.message) {
+                            // Display the error message to the user
+                            alert('Error: ' + errorResponse.message);
+                        } else {
+                            // Display a generic error message
+                            alert('An error occurred. Please try again.');
+                        }
+                    } catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                        alert('An error occurred. Please try again.');
+                    }
+                } else {
+                    // Display a generic error message if no responseText is available
+                    alert('An unexpected error occurred. Please try again.');
+                }
+            },
+            complete: function () {
+                $('#loader').hide();
+            }
+
+        });
+    }
+    function getCookie(name) {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith(name + '='))
+            ?.split('=')[1];
+        return cookieValue ? decodeURIComponent(cookieValue) : null;
+    }
+
+    function ShowMessage(message) {
+        // Get the message container
+        var messageContainer = document.getElementById('messageContainer');
+
+        // Display success message
+        messageContainer.textContent = message;
+        messageContainer.style.backgroundColor = '#4CAF50';
+        messageContainer.style.opacity = '1';
+
+        // Hide the message after 3 seconds (3000 milliseconds)
+        setTimeout(function () {
+            messageContainer.style.opacity = '0';
+        }, 3000);
+
+        // Redirect to index page after a short delay (optional)
+        setTimeout(function () {
+            window.location.href = '/GraduateTraineeAjax/Index';
+        }, 3500); // Redirect after 3.5 seconds (3500 milliseconds)
+    }
+
+</script>

@@ -1,0 +1,22 @@
+﻿@using GraduateTraineeEnrollmentMVC.ViewModels
+@model AddDegreeViewModel
+
+<h1>Edit Degree</h1>
+<form asp-action="Edit">
+    <input type="hidden" asp-for="DegreeId" />
+    <div class="form-group">
+        <label asp-for="DegreeName" class="control-label"></label>
+        <input asp-for="DegreeName" class="form-control" />
+        <span asp-validation-for="DegreeName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DegreeDescription" class="control-label"></label>
+        <input asp-for="DegreeDescription" class="form-control" />
+        <span asp-validation-for="DegreeDescription" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-default">Cancel</a>
+    </div>
+
+</form>

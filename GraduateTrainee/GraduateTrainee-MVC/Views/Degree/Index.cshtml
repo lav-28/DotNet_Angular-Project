@@ -1,0 +1,39 @@
+﻿@using GraduateTraineeEnrollmentMVC.ViewModels
+@model List<DegreeViewModel>
+
+
+<h1>Degrees</h1>
+
+<table id="degreeGrid" class="table">
+    <thead>
+        <tr>
+
+            <th>Degree Name</th>
+            <th>Degree Description</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @foreach (var degree in Model)
+
+        {
+
+            <tr>
+                <td>@degree.DegreeName</td>
+                <td>@degree.DegreeDescription</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Degree" asp-route-id="@degree.DegreeId">Edit</a> |
+                    <a asp-action="Delete" asp-controller="Degree" asp-route-id="@degree.DegreeId">Delete</a> |
+                    <a asp-action="Details" asp-controller="Degree" asp-route-id="@degree.DegreeId">Details</a>
+
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Create" asp-controller="Degree" >Add</a>

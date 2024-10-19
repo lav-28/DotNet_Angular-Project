@@ -1,0 +1,161 @@
+﻿<h2>Trainee details</h2>
+
+<div id="TraineeData">
+    @*  <td>
+    <img src="@Url.Content("~/Uploads/"+@Model.Image)" alt="Trainee image" width="100" height="100" id="imagepic" />
+    </td>  *@
+    <h3> Name : <label id="Tname" ></label></h3>
+    <h4> Email :<label id="Temail"></label></h4>
+    <h5>University : <label id="TUniversity"></label></h5>
+    <h5>Gender :<label id="TGender"></label></h5>
+    <h5>Date of Application :<label id="TDate"></label></h5>
+    <h5>Last semester pending : <label id="TLastSem"></label></h5>
+    <h5>Ai : <label id="Ai"></label></h5>
+    <h5>Python : <label id="Py"></label></h5>
+    <h5>BusinessAnalysis : <label id="BA"></label></h5>
+    <h5>MachineLearning : <label id="ML"></label></h5>
+    <h5>Practical : <label id="PR"></label></h5>
+    <h5>Percentage :<label id="TPercentage"></label></h5>
+    <h5>Is Admission Confirmed :<label id="TAdmission"></label></h5>
+</div>
+
+<p>
+
+    <a asp-action="Index" asp-route-id="">Back</a>
+</p>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        LoadTrainee();
+    });
+
+    function LoadTrainee() {
+
+        var currentUrl = window.location.href;
+        var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+        $('#loader').show();
+        // Get jwtToken cookie value
+        // Retrieve 'jwtToken' cookie value
+        const jwtToken = getCookie('jwtToken');
+        if (!jwtToken) {
+            // Redirect to login page if jwtToken cookie is not available
+            window.location.href = '/auth/login';
+            return; // Stop further execution
+        }
+        $.ajax({
+            url: "http://localhost:5134/api/GraduateTrainee/GetById/" + id,
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            },
+            success: function (response) {
+                if (response.success) {
+
+                    $("#Tname").html(response.data.traineeName);
+                    $("#Temail").html(response.data.traineeEmail);
+                    $("#TUniversity").html(response.data.universityName);
+                    if (response.data.gender == 'M') {
+                        $("#TGender").html("Male");
+
+                    }
+                    else {
+                        $("#TGender").html("Female");
+                    }
+
+                    var dateObj = new Date(response.data.dateOfApplication);
+                    var year = dateObj.getFullYear();
+                    var month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    var day = String(dateObj.getDate()).padStart(2, '0');
+                    var formattedDate = day + "-" + month + "-" + year;
+                    $("#TDate").html(formattedDate);
+
+                    if (response.data.isLastSemesterPending === true) {
+                        $("#TLastSem").html("Yes");
+                    }
+                    else {
+                        $("#TLastSem").html("No");
+
+                    }
+
+                    $("#Ai").html(response.data.ai);
+                    $("#ML").html(response.data.machineLearning);
+                    $("#BA").html(response.data.businessAnalysis);
+                    $("#PR").html(response.data.practical);
+                    $("#Py").html(response.data.phyton);
+
+                    if (response.data.percentages == null) {
+                        $("#TPercentage").html("NA");
+                    }
+                    
+
+                    if (response.data.isAdmisisonConfirmed === false) {
+                        $("#TAdmission").html("No");
+                    }
+                    else {
+                        $("#TAdmission").html("Yes");
+
+                    }
+
+                    if (response.data.isLastSemesterPending === true) {
+                        $("#Ai").html(response.data.ai).html("NA");
+                        $("#ML").html(response.data.machineLearning).html("NA");
+                        $("#BA").html(response.data.businessAnalysis).html("NA");
+                        $("#PR").html(response.data.practical).html("NA");
+                        $("#Py").html(response.data.phyton).html("NA");
+                    }
+                    else {
+
+                        if (response.data.percentages >= 60) {
+                            $("#TAdmission").html("Yes");
+                        }
+                        else {
+                            $("#TAdmission").html("No");
+                        }
+                    }
+
+
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseText) {
+
+                    try {
+                        // Parse the responseText into a JavaScript object
+                        var errorResponse = JSON.parse(xhr.responseText);
+
+                        // Check the properties of the errorResponse object
+                        if (errorResponse && errorResponse.message) {
+                            // Display the error message to the user
+                            alert('Error: ' + errorResponse.message);
+                        } else {
+                            // Display a generic error message
+                            alert('An error occurred. Please try again. ');
+
+                        }
+                    }
+
+
+                    catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                        alert('An error occurred. Please try again. ');
+                    }
+
+                } else {
+                    // Display a generic error message if no responseText is available
+                    alert('An unexpected error occurred. Please try again. ');
+                }
+            },
+            complete: function () {
+                $('#loader').hide();
+            }
+        });
+    }
+    function getCookie(name) {
+        const cookieValue = document.cookie
+            .split('; ')
+            .find(cookie => cookie.startsWith(name + '='))
+            ?.split('=')[1];
+        return cookieValue ? decodeURIComponent(cookieValue) : null;
+    }
+</script>

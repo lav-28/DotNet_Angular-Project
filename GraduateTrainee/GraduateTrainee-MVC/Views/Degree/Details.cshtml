@@ -1,0 +1,12 @@
+﻿@using GraduateTraineeEnrollmentMVC.ViewModels
+@model AddDegreeViewModel
+
+<h1>Degree Deatails</h1>
+<div class="form-group">
+    <h4>Name        : @Model.DegreeName</h4>
+    <h4>Description : @Model.DegreeDescription</h4>
+</div>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.DegreeId">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.DegreeId">Delete</a>
+</p>

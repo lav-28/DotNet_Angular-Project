@@ -1,0 +1,13 @@
+﻿@using GraduateTraineeEnrollmentMVC.ViewModels
+@model AddStreamViewModel
+
+<h1>Stream Details</h1>
+<div class="form-group">
+    <h4>Name        : @Model.StreamName</h4>
+    <h4>Description : @Model.StreamDescription</h4>
+</div>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.StreamId">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.StreamId">Delete</a>
+    <a asp-action="Index" class="btn btn-default">Back to list</a>
+</p>
