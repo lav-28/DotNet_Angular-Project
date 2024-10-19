@@ -1,0 +1,33 @@
+<h1>Degrees</h1>
+<div *ngIf="loading">
+    <img src="assets/loaderImage.gif" alt="loading..."/>
+</div>
+<table class="table" *ngIf="!loading">
+    <thead>
+        <tr>
+            <th>Degree Name</th>
+            <th>Degree Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="!loading && !degrees">
+            <td colspan="3">No degrees found</td>
+        </tr>
+        <tr *ngFor="let degree of degrees">
+            <td>{{ degree.degreeName | capitalize}}</td>
+            <td>{{ degree.degreeDescription | capitalize}}</td>
+            <td>
+                <button class="btn btn-outline-primary rounded-pill btn-sm" (click)="degreeUpdate(degree.degreeId)">
+                    Edit
+                </button> |  
+                <button class="btn btn-outline-info rounded-pill btn-sm" (click)="degreeDetails(degree.degreeId)">
+                    Details
+                </button> |
+                <button class="btn btn-outline-danger rounded-pill btn-sm" (click)="confirmDelete(degree.degreeId)">
+                    Delete
+                </button> 
+            </td>
+    </tbody>
+</table>
+<a [routerLink]="['/degree/add']" class="btn btn-outline-primary" routerLinkActive="router-link-active" >Add</a> 

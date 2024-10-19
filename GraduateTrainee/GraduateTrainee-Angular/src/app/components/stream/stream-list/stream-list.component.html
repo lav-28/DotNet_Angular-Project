@@ -1,0 +1,33 @@
+<h1>Streams</h1>
+<div *ngIf="loading">
+    <img src="assets/loaderImage.gif" alt="loading..."/>
+</div>
+
+<table class="table" *ngIf="!loading">
+    <thead>
+        <tr>
+            <th>Degree Name</th>
+            <th>Degree Description</th>
+            <th>Stream Name</th>
+            <th>Stream Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="!loading && !streams">
+            <td colspan="5">No stream found</td>
+        </tr>
+        <tr *ngFor="let stream of streams">
+            <td>{{stream.degree.degreeName}}</td>
+            <td>{{stream.degree.degreeDescription}}</td>
+            <td>{{stream.streamName}}</td>
+            <td>{{stream.streamDescription}}</td>
+            <td>
+                <button class="btn btn-outline-primary rounded-pill btn-sm" (click)="streamUpdate(stream.streamId)">Edit</button> |
+                <button class="btn btn-outline-info rounded-pill btn-sm" (click)="streamDetails(stream.streamId)">Details</button> |
+                <button class="btn btn-outline-danger rounded-pill btn-sm" (click)="confirmDelete(stream.streamId)">Delete</button> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+<a [routerLink]="['/stream/add']" class="btn btn-outline-primary" routerLinkActive="router-link-active" >Add</a> 

@@ -1,0 +1,57 @@
+<div class="container">
+    <h2 class="row justify-content-center">Add Stream</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form #addStreamForm="ngForm" class="need-validation" (ngSubmit)="onSubmit(addStreamForm)" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="degreeId">Degree</label>
+                    <select id="degreeId" name="degreeId" class="form-control" [(ngModel)]="stream.degreeId" required>
+                        <option selected=true disabled value=0 >Select your Degree</option>
+                        <option *ngFor="let degree of degrees" [value]="degree.degreeId">{{degree.degreeName}}</option>
+                    </select>
+                    <div *ngIf="(addStreamForm.controls['degreeId']?.invalid || addStreamForm.controls['degreeId']?.value == 0) && addStreamForm.controls['degreeId']?.touched">
+                        <small class="text-danger">Degree is required.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="streamName">Stream Name:</label>
+                    <input type="text" class="form-control" id="streamName" name="streamName"
+                        [(ngModel)]="stream.streamName" required minlength="2">
+                    <div
+                        *ngIf="addStreamForm.controls['streamName']?.invalid && addStreamForm.controls['streamName']?.touched">
+                        <small class="text-danger"
+                            *ngIf="addStreamForm.controls['streamName']?.errors?.['required']">Stream name
+                            is
+                            required.</small>
+                        <small class="text-danger"
+                            *ngIf="addStreamForm.controls['streamName']?.errors?.['minlength']">Stream must be
+                            at least 2 characters
+                            long.</small>
+                    </div>
+                </div>  
+
+                <div class="mb-3">
+                    <label class="form-label" for="streamDescription">Stream Description:</label>
+                    <input type="text" class="form-control" id="streamDescription" name="streamDescription"
+                        [(ngModel)]="stream.streamDescription" required minlength="3">
+                    <div
+                        *ngIf="addStreamForm.controls['streamDescription']?.invalid && addStreamForm.controls['streamDescription']?.touched">
+                        <small class="text-danger"
+                            *ngIf="addStreamForm.controls['streamDescription']?.errors?.['required']">Stream
+                            description is required.</small>
+                        <small class="text-danger"
+                            *ngIf="addStreamForm.controls['streamDescription']?.errors?.['minlength']">Stream description
+                            must
+                            be
+                            at least 3 characters
+                            long.</small>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="addStreamForm.invalid">Submit</button> | 
+                <a class="btn btn-primary" [routerLink]="['/streams']" routerLinkActive="router-link-active" >Cancel</a>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="container">
+    <h2>Trainee Details</h2>
+    <div class="card mb-3">
+        <div class="card-header">
+            <td *ngIf='trainee.image == null || trainee.image == "" '><img src="assets/defaultContact.jpg" alt="Category img" width="100" height="100" /></td>
+            <td *ngIf="trainee.image != null && trainee.image != '' "><img src="assets/{{trainee.image}}" alt="Category img" width="100" height="100" /></td>
+            <td>
+                <h2>{{trainee.traineeName}}</h2>
+            </td>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-2">Degree</dt>
+                <dd class="col-sm-10">{{trainee.degree.degreeName| capitalize}}</dd>
+
+                <dt class="col-sm-2">Stream</dt>
+                <dd class="col-sm-10">{{trainee.stream.streamName| capitalize}}</dd>
+
+                <dt class="col-sm-2">Emai;</dt>
+                <dd class="col-sm-10">{{trainee.traineeEmail| capitalize}}</dd>
+
+                <dt class="col-sm-2">University</dt>
+                <dd class="col-sm-10">{{trainee.universityName| capitalize}}</dd>
+
+                <dt class="col-sm-2">Is Last Sem Pending</dt>
+                <dd class="col-sm-10" *ngIf="trainee.isLastSemesterPending">Yes</dd>
+                <dd class="col-sm-10" *ngIf="!trainee.isLastSemesterPending">No</dd>
+
+                <dt class="col-sm-2">Gender</dt>
+                <dd class="col-sm-10" *ngIf="trainee.gender == 'm' || trainee.gender== 'M' ">Male</dd>
+                <dd class="col-sm-10" *ngIf="trainee.gender == 'f' || trainee.gender== 'F' ">Fem    ale</dd>
+
+                <dt class="col-sm-2">Date of Application</dt>
+                <dd class="col-sm-10">{{trainee.dateOfApplication | date:'dd-MM-yyyy'}}</dd>
+
+                <dt class="col-sm-2">Python marks</dt>
+                <dd class="col-sm-10" *ngIf="trainee.phyton == null ">NA</dd>
+                <dd class="col-sm-10" *ngIf="trainee.phyton != null ">{{trainee.phyton}}</dd>
+
+                <dt class="col-sm-2">AI marks</dt>
+                <dd class="col-sm-10" *ngIf="trainee.ai == null ">NA</dd>
+                <dd class="col-sm-10" *ngIf="trainee.ai != null ">{{trainee.ai}}</dd>
+
+                <dt class="col-sm-2">Business analysis marks</dt>
+                <dd class="col-sm-10" *ngIf="trainee.businessAnalysis == null ">NA</dd>
+                <dd class="col-sm-10" *ngIf="trainee.businessAnalysis != null ">{{trainee.businessAnalysis}}</dd>
+
+                <dt class="col-sm-2">Machine learning marks</dt>
+                <dd class="col-sm-10" *ngIf="trainee.machineLearning == null ">NA</dd>
+                <dd class="col-sm-10" *ngIf="trainee.machineLearning != null ">{{trainee.machineLearning}}</dd>
+
+                <dt class="col-sm-2">Practical marks</dt>
+                <dd class="col-sm-10" *ngIf="trainee.practical == null ">NA</dd>
+                <dd class="col-sm-10" *ngIf="trainee.practical != null ">{{trainee.practical}}</dd>
+
+                <dt class="col-sm-2">Total marks</dt>
+                <dd class="col-sm-10" *ngIf="trainee.totalMarks == null ">NA</dd>
+                <dd class="col-sm-10" *ngIf="trainee.totalMarks != null ">{{trainee.totalMarks}}</dd>
+
+                <dt class="col-sm-2">Percentage</dt>
+                <dd class="col-sm-10" *ngIf="trainee.percentages == null ">NA</dd>
+                <dd class="col-sm-10" *ngIf="trainee.percentages != null ">{{trainee.percentages}}%</dd>
+
+                <dt class="col-sm-2">Is admission confirmed</dt>
+                <dd class="col-sm-10" *ngIf="trainee.isAdmisisonConfirmed">Yes</dd>
+                <dd class="col-sm-10" *ngIf="!trainee.isAdmisisonConfirmed">No</dd>
+
+            </dl>
+        </div>
+    </div>
+</div>

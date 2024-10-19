@@ -1,0 +1,49 @@
+<h1>Graduate Trainee</h1>
+<div *ngIf="loading">
+    <img src="assets/loaderImage.gif" alt="loading..."/>
+</div>
+<table class="table table-striped" *ngIf="!loading">
+    <thead style="text-align: center;">
+        <tr>
+            <th>Trainee name</th>
+            <th>Degree name</th>
+            <th>Stream name</th>
+            <th>Trainee email</th>
+            <th>University name</th>
+            <th>Is Last Sem Pending</th>
+            <th>Gender</th>
+            <th>Date of Application</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    
+    <tbody style="text-align: center; vertical-align: middle;">
+        <tr *ngIf="!loading && !trainees">
+            <td colspan="6">No Graduate Trainee found</td>
+        </tr>    
+        <tr *ngFor="let trainee of trainees">
+            <td>{{trainee.traineeName}}</td>
+            <td>{{trainee.degree.degreeName}}</td>
+            <td>{{trainee.stream.streamName}}</td>
+            <td>{{trainee.traineeEmail}}</td>
+            <td>{{trainee.universityName}}</td>
+            <td *ngIf="trainee.isLastSemesterPending">Yes</td>
+            <td *ngIf="!trainee.isLastSemesterPending">No</td>
+            <td *ngIf="trainee.gender == 'm' || trainee.gender == 'M'">Male</td>
+            <td *ngIf="trainee.gender == 'f' || trainee.gender == 'F'">Female</td>
+            <td>{{trainee.dateOfApplication | date:'dd-MM-yyyy'}}</td>
+            <td>
+                <button class="btn btn-outline-primary rounded-pill btn-sm" (click)="traineeUpdate(trainee.graduateTraineeId)">
+                    Edit
+                </button> | 
+                <button class="btn btn-outline-info rounded-pill btn-sm" (click)="traineeDetails(trainee.graduateTraineeId)">
+                    Details
+                </button> | 
+                <button class="btn btn-outline-danger rounded-pill btn-sm" (click)="confirmDelete(trainee.graduateTraineeId)">
+                    Delete
+                </button> 
+            </td>
+        </tr>
+    </tbody>
+</table>
+<a [routerLink]="['/trainee/add']" class="btn btn-outline-primary" routerLinkActive="router-link-active" >Add</a> 

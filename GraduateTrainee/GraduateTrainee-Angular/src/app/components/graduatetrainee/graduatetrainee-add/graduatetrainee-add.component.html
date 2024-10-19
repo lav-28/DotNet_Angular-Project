@@ -1,0 +1,180 @@
+<div class="container">
+    <h2 class="row justify-content-center">Add Graduate Trainee</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form #TraineeForm="ngForm" class="need-validation" (ngSubmit)="onSubmit(TraineeForm)" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="degreeId">Degree:</label>
+                    <select id="degreeId" name="degreeId" class="form-control" [(ngModel)]="trainee.degreeId" (change)="onDegreeChange()" required>
+                    <option value="0" disabled>Select your degree</option>
+                    <option *ngFor="let degree of degrees" [value]=degree.degreeId>{{degree.degreeName}}</option>
+                    </select>
+                    <div *ngIf="(TraineeForm.controls['degreeId']?.invalid || TraineeForm.controls['degreeId']?.value == 0) && TraineeForm.controls['degreeId']?.touched">
+                        <small class="text-danger">Degree is required.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="streamId">Stream:</label>
+                    <select id="streamId" name="streamId" class="form-control" [(ngModel)]="trainee.streamId" required>
+                        <option value="0" disabled>Select your Stream</option>
+                        <option *ngFor="let stream of streams" [value]=stream.streamId>{{stream.streamName}}</option>
+                    </select>
+                    <div *ngIf="(TraineeForm.controls['streamId']?.invalid || TraineeForm.controls['streamId']?.value==0) && TraineeForm.controls['streamId']?.touched">
+                        <small class="text-danger">Stream is required.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="traineeName">Trainee Name:</label>
+                    <input type="text" class="form-control" id="traineeName" name="traineeName" [(ngModel)]="trainee.traineeName" required
+                        minlength="1">
+                    <div *ngIf="TraineeForm.controls['traineeName']?.invalid && TraineeForm.controls['traineeName']?.touched">
+                        <small class="text-danger" *ngIf="TraineeForm.controls['traineeName']?.errors?.['required']">Name is
+                            required.</small>
+                        <small class="text-danger" *ngIf="TraineeForm.controls['traineeName']?.errors?.['minlength']">Name must be
+                            at least 1 characters
+                            long.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="traineeEmail">Email:</label>
+                    <input type="email" class="form-control" id="traineeEmail" name="traineeEmail" [(ngModel)]="trainee.traineeEmail" required
+                        email>
+                    <div *ngIf="TraineeForm.controls['traineeEmail']?.invalid && TraineeForm.controls['traineeEmail']?.touched">
+                        <small class="text-danger" *ngIf="TraineeForm.controls['traineeEmail']?.errors?.['required']">Email is
+                            required.</small>
+                        <small class="text-danger" *ngIf="TraineeForm.controls['traineeEmail']?.errors?.['traineeEmail']">Invalid email
+                            format.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="universityName">University name:</label>
+                    <input type="text" class="form-control" id="universityName" name="universityName" [(ngModel)]="trainee.universityName" required
+                        minlength="1">
+                    <div *ngIf="TraineeForm.controls['universityName']?.invalid && TraineeForm.controls['universityName']?.touched">
+                        <small class="text-danger" *ngIf="TraineeForm.controls['universityName']?.errors?.['required']">University name is
+                            required.</small>
+                        <small class="text-danger" *ngIf="TraineeForm.controls['universityName']?.errors?.['minlength']">University name must be
+                            at least 1 characters
+                            long.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="isLastSemesterPending" class="form-label">Is Last Semester Pending :  </label>  
+                    <input type="checkbox" id="isLastSemesterPending" name="isLastSemesterPending" [value]="true" [(ngModel)]="trainee.isLastSemesterPending">
+                    <label class="form-label" for="isLastSemesterPending"></label>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Gender:</label>
+                    <div>
+                        <input type="radio" id="male" name="gender" value="m" [(ngModel)]="trainee.gender" required>
+                        <label class="form-label" for="male">Male</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="female" name="gender" value="f" [(ngModel)]="trainee.gender" required>
+                        <label class="form-label" for="female">Female</label>
+                    </div>
+                    <div *ngIf="TraineeForm.controls['gender']?.invalid && TraineeForm.controls['gender']?.touched">
+                        <small class="text-danger">Gender is required.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div>
+                        <label class="form-label" for="dateOfApplication">Date of Application</label>
+                        <input type="date" id="dateOfApplication" name="dateOfApplication" class="form-control" [(ngModel)]="trainee.dateOfApplication" required>
+                        <div *ngIf="TraineeForm.controls['universityName']?.invalid && TraineeForm.controls['universityName']?.touched">
+                            <small class="text-danger" *ngIf="TraineeForm.controls['dateOfApplication']?.errors?.['required']">Date of application is
+                                required.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-group" >
+                        <label class="form-label" for="image"></label>
+                        <input type="file" class="form-control" id="image" name="image" [(ngModel)]="trainee.image">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="ai">AI marks:</label>
+                    <input type="number" class="form-control" id="ai" name="ai" [(ngModel)]="trainee.ai" 
+                        min="0" max="100">
+                    <div *ngIf="TraineeForm.controls['ai']?.invalid">
+                        <small class="text-danger" *ngIf="TraineeForm.controls['ai']?.errors?.['max']">
+                            Marks cannot be more than 100
+                        </small>
+                        <small class="text-danger" *ngIf="TraineeForm.controls['ai']?.errors?.['min']">
+                            Marks cannot be less than 0
+                        </small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="phyton">Python marks:</label>
+                    <input type="number" class="form-control" id="phyton" name="phyton" [(ngModel)]="trainee.phyton" 
+                        min="0" max="100">
+                    <div *ngIf="TraineeForm.controls['phyton']?.invalid">
+                        <small class="text-danger" *ngIf="TraineeForm.controls['phyton']?.errors?.['max']">
+                            Marks cannot be more than 100
+                        </small>
+                        <small class="text-danger" *ngIf="TraineeForm.controls['phyton']?.errors?.['min']">
+                            Marks cannot be less than 0
+                        </small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="businessAnalysis">Business analysis marks:</label>
+                    <input type="number" class="form-control" id="businessAnalysis" name="businessAnalysis" [(ngModel)]="trainee.businessAnalysis" 
+                        min="0" max="100">
+                    <div *ngIf="TraineeForm.controls['businessAnalysis']?.invalid">
+                        <small class="text-danger" *ngIf="TraineeForm.controls['businessAnalysis']?.errors?.['max']">
+                            Marks cannot be more than 100
+                        </small>
+                        <small class="text-danger" *ngIf="TraineeForm.controls['businessAnalysis']?.errors?.['min']">
+                            Marks cannot be less than 0
+                        </small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="machineLearning">Machine learning marks:</label>
+                    <input type="number" class="form-control" id="machineLearning" name="machineLearning" [(ngModel)]="trainee.machineLearning" 
+                        min="0" max="100">
+                    <div *ngIf="TraineeForm.controls['machineLearning']?.invalid">
+                        <small class="text-danger" *ngIf="TraineeForm.controls['machineLearning']?.errors?.['max']">
+                            Marks cannot be more than 100
+                        </small>
+                        <small class="text-danger" *ngIf="TraineeForm.controls['machineLearning']?.errors?.['min']">
+                            Marks cannot be less than 0
+                        </small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="practical">Practical marks:</label>
+                    <input type="number" class="form-control" id="practical" name="practical" [(ngModel)]="trainee.practical" 
+                        min="0" max="100">
+                    <div *ngIf="TraineeForm.controls['practical']?.invalid">
+                        <small class="text-danger" *ngIf="TraineeForm.controls['practical']?.errors?.['max']">
+                            Marks cannot be more than 100
+                        </small>
+                        <small class="text-danger" *ngIf="TraineeForm.controls['practical']?.errors?.['min']">
+                            Marks cannot be less than 0
+                        </small>
+                    </div>
+                </div>
+
+                <button class="btn btn-outline-primary" type="submit" [disabled]="!TraineeForm.valid">Submit</button> | 
+                <a  [routerLink]="['/contacts']" routerLinkActive="router-link-active" >Back to List</a>
+            </form>
+        </div>
+    </div>
+</div>
